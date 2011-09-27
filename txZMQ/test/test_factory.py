@@ -6,6 +6,8 @@ from twisted.trial import unittest
 
 from txZMQ.factory import ZmqFactory
 
+from zmq.core.context import Context
+
 
 class ZmqFactoryTestCase(unittest.TestCase):
     """
@@ -17,3 +19,9 @@ class ZmqFactoryTestCase(unittest.TestCase):
 
     def test_shutdown(self):
         self.factory.shutdown()
+
+    def test_optional_context(self):
+        context = Context()
+        factory = ZmqFactory(context)
+        self.addCleanup(factory.shutdown)
+        self.assertTrue(self.factory.context, context)

@@ -30,14 +30,16 @@ class ZmqFactory(object):
     ioThreads = 1
     lingerPeriod = 100
 
-    def __init__(self):
+    def __init__(self, context=None):
         """
         Constructor.
 
         Create ZeroMQ context.
         """
         self.connections = set()
-        self.context = Context(self.ioThreads)
+        if context is None:
+            context = Context(self.ioThreads)
+        self.context = context
 
     def __repr__(self):
         return "ZmqFactory()"
